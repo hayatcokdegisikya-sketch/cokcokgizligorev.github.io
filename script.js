@@ -102,3 +102,6 @@ async function startStory() {
   await typeLine("1 - terk edilmiş binaya git", "system");
   await typeLine("2 - sinyali takip et", "system");
 }
+const ambient = document.getElementById("ambient");
+const typeSound = document.getElementById("typeSound");
+const glitchSound = document.getElementById("glitchSound");
