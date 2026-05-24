@@ -71,6 +71,7 @@ async function loginSuccess() {
     "durum: beklemede",
     "",
     "hoş geldin ajan gündüz"
+    "ilk görevine başlamak için lütfen A1 paketinin arkasındaki kodu gir"
   ];
 
   for (let line of mission) {
