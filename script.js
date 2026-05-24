@@ -3,6 +3,7 @@ const output = document.getElementById("output");
 const loginText = document.getElementById("loginText");
 const loginBox = document.querySelector(".login");
 
+// 🔐 gerçek şifre burada tutulur
 let realPassword = "";
 
 // yazı efekti
@@ -31,29 +32,37 @@ async function bootSequence() {
   }
 }
 
-// 🔐 INPUT FIX (EN ÖNEMLİ KISIM)
-input.addEventListener("input", function (e) {
-  // gerçek şifreyi kaydet
-  realPassword = e.target.value;
+bootSequence();
+
+
+// 🔐 BURASI %100 DOĞRU YÖNTEM
+input.addEventListener("keydown", function (e) {
+
+  if (e.key === "Backspace") {
+    realPassword = realPassword.slice(0, -1);
+  }
+
+  else if (e.key === "Enter") {
+    checkPassword();
+  }
+
+  else if (e.key.length === 1) {
+    realPassword += e.key;
+  }
 
   // ekranda yıldız göster
   input.value = "*".repeat(realPassword.length);
 });
 
-// ENTER
-input.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-
-    if (realPassword === "1234") {
-      loginSuccess();
-    } else {
-      loginText.innerText = "erişim reddedildi";
-
-      realPassword = "";
-      input.value = "";
-    }
+function checkPassword() {
+  if (realPassword === "1234") {
+    loginSuccess();
+  } else {
+    loginText.innerText = "erişim reddedildi";
+    realPassword = "";
+    input.value = "";
   }
-});
+}
 
 // giriş başarılı
 async function loginSuccess() {
@@ -72,6 +81,3 @@ async function loginSuccess() {
     await new Promise(r => setTimeout(r, 150));
   }
 }
-
-// başlat
-bootSequence();
