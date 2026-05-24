@@ -5,7 +5,7 @@ const loginBox = document.querySelector(".login");
 
 let realPassword = "";
 
-// yazı efekti
+// yazı yazma efekti
 async function typeLine(text, speed = 25) {
   for (let i = 0; i < text.length; i++) {
     output.innerText += text[i];
@@ -14,8 +14,10 @@ async function typeLine(text, speed = 25) {
   output.innerText += "\n";
 }
 
-// boot ekranı
-window.onload = async function () {
+// 🔥 BOOT AKIŞI
+async function bootSequence() {
+  loginText.innerText = "";
+
   const boot = [
     "sistem başlatılıyor...",
     "çekirdek modülleri yükleniyor...",
@@ -33,7 +35,7 @@ window.onload = async function () {
     await typeLine(line, 20);
     await new Promise(r => setTimeout(r, 200));
   }
-};
+}
 
 // şifre mask
 input.addEventListener("input", function () {
@@ -41,7 +43,7 @@ input.addEventListener("input", function () {
   input.value = "*".repeat(realPassword.length);
 });
 
-// login kontrol
+// enter kontrol
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     if (realPassword === "1234") {
@@ -54,7 +56,7 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// ajan paneli
+// login başarılı
 async function loginSuccess() {
   loginBox.remove();
   output.innerText = "";
@@ -66,14 +68,12 @@ async function loginSuccess() {
     "aktif görevler yükleniyor...",
     "",
     "görev 1: veri sunucusu sızması",
-    "hedef: bilinmiyor",
     "öncelik: yüksek",
     "",
     "görev 2: iz temizleme protokolü",
     "durum: beklemede",
     "",
     "----------------------------",
-    "komutlar: status / mission / clear",
     "hoş geldin ajan"
   ];
 
@@ -82,3 +82,6 @@ async function loginSuccess() {
     await new Promise(r => setTimeout(r, 150));
   }
 }
+
+// 🚀 başlat
+bootSequence();
