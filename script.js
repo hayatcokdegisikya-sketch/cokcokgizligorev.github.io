@@ -83,10 +83,10 @@ async function startMission() {
     "ajan doğrulandı...",
     "şifreli kanal açılıyor...",
     "----------------------------",
-    "command: beni duyabiliyor musun ajan gündüz?",
-    "command: ilk görevin hazır.",
-    "command: şehirde gizli bir veri paketi kayboldu.",
-    "command: paketi ilk bulan taraf operasyonu kazanacak.",
+await typeStory("yağmur neredeyse üç saattir durmuyordu.");
+await typeStory("şehrin ışıkları ıslak asfaltın üstünde kırılıyordu.");
+await typeStory("terminal ekranında tek bir mesaj yanıp söndü:");
+await typeStory("\"uyanık kal. seni izliyorlar.\"");
     "",
     "1 - terk edilmiş depoya git",
     "2 - limandaki muhbiri ara"
