@@ -14,11 +14,12 @@ body {
 
 #output {
   white-space: pre-wrap;
+  line-height: 1.8;
   margin-bottom: 20px;
 }
 
 .login {
-  margin-top: 10px;
+  display: none;
 }
 
 .input-line {
@@ -34,4 +35,5 @@ input {
   color: #7cff7c;
   font-family: 'Press Start 2P', monospace;
   font-size: 12px;
+  width: 100%;
 }
