@@ -5,7 +5,7 @@ const loginBox = document.querySelector(".login");
 
 let realPassword = "";
 
-// yazı yazma efekti
+// yazı efekti
 async function typeLine(text, speed = 25) {
   for (let i = 0; i < text.length; i++) {
     output.innerText += text[i];
@@ -14,20 +14,14 @@ async function typeLine(text, speed = 25) {
   output.innerText += "\n";
 }
 
-// 🔥 BOOT AKIŞI
+// BOOT
 async function bootSequence() {
-  loginText.innerText = "";
-
   const boot = [
     "sistem başlatılıyor...",
     "çekirdek modülleri yükleniyor...",
     "şifreleme protokolü aktif...",
-    "izleme sistemleri hazırlanıyor...",
     "----------------------------",
     "gizli ajan terminali",
-    "yetki seviyesi: delta-7",
-    "durum: sınıflandırılmış",
-    "----------------------------",
     "kimlik doğrulaması gerekli"
   ];
 
@@ -37,26 +31,31 @@ async function bootSequence() {
   }
 }
 
-// şifre mask
-input.addEventListener("input", function () {
-  realPassword = input.value;
+// 🔐 INPUT FIX (EN ÖNEMLİ KISIM)
+input.addEventListener("input", function (e) {
+  // gerçek şifreyi kaydet
+  realPassword = e.target.value;
+
+  // ekranda yıldız göster
   input.value = "*".repeat(realPassword.length);
 });
 
-// enter kontrol
+// ENTER
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
+
     if (realPassword === "1234") {
       loginSuccess();
     } else {
       loginText.innerText = "erişim reddedildi";
+
       realPassword = "";
       input.value = "";
     }
   }
 });
 
-// login başarılı
+// giriş başarılı
 async function loginSuccess() {
   loginBox.remove();
   output.innerText = "";
@@ -65,23 +64,14 @@ async function loginSuccess() {
     "erişim sağlandı...",
     "ajan doğrulandı",
     "----------------------------",
-    "aktif görevler yükleniyor...",
-    "",
-    "görev 1: veri sunucusu sızması",
-    "öncelik: yüksek",
-    "",
-    "görev 2: iz temizleme protokolü",
-    "durum: beklemede",
-    "",
-    "----------------------------",
-    "hoş geldin ajan"
+    "hoş geldin ajan gündüz"
   ];
 
   for (let line of mission) {
-    await typeLine(line, 20);
+    await typeLine(line, 25);
     await new Promise(r => setTimeout(r, 150));
   }
 }
 
-// 🚀 başlat
+// başlat
 bootSequence();
