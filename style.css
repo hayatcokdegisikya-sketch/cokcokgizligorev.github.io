@@ -37,3 +37,7 @@ input {
   font-size: 12px;
   width: 100%;
 }
+.story {
+  color: #e8d38a;
+  line-height: 2;
+}
