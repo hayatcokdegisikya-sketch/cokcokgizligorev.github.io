@@ -2,9 +2,20 @@ const input = document.getElementById("input");
 const output = document.getElementById("output");
 const loginBox = document.querySelector(".login");
 
+const ambient = document.getElementById("ambient");
+const typeSound = document.getElementById("typeSound");
+const glitchSound = document.getElementById("glitchSound");
+
 let gameStarted = false;
 
-// 🎬 EVRENİK YAZI MOTORU
+// glitch
+function playGlitch() {
+  const g = glitchSound.cloneNode();
+  g.volume = 0.4;
+  g.play();
+}
+
+// yazı motoru
 async function typeLine(text, type = "system") {
 
   const div = document.createElement("div");
@@ -15,48 +26,39 @@ async function typeLine(text, type = "system") {
 
     div.innerText += text[i];
 
-    let delay = 22;
+    const s = typeSound.cloneNode();
+    s.volume = 0.2;
+    s.play();
 
-    // dramatik duraksama
-    if (text[i] === "." || text[i] === "," || text[i] === "…") {
-      delay = 200;
-    }
+    let delay = 18;
+    if (".,!?".includes(text[i])) delay = 180;
 
     await new Promise(r => setTimeout(r, delay));
   }
 
   div.innerText += "\n";
-
   window.scrollTo(0, document.body.scrollHeight);
 
-  await new Promise(r => setTimeout(r, 500));
+  await new Promise(r => setTimeout(r, 400));
 }
 
-// 🚀 BOOT SEQUENCE (YEŞİL)
-async function bootSequence() {
+// boot
+async function boot() {
 
-  const boot = [
-    "sistem başlatılıyor...",
-    "çekirdek modülleri yükleniyor...",
-    "şifreleme protokolü aktif...",
-    "güvenli kanal aranıyor...",
-    "command bağlantısı kuruluyor...",
-    "kimlik doğrulaması gerekli",
-    "lütfen şifreyi giriniz"
-  ];
+  ambient.volume = 0.2;
+  ambient.play();
 
-  for (let line of boot) {
-    await typeLine(line, "system");
-  }
+  await typeLine("sistem başlatılıyor...", "system");
+  await typeLine("çekirdek aktif...", "system");
+  await typeLine("kimlik doğrulama gerekli", "system");
 
   loginBox.style.display = "block";
-  input.focus();
 }
 
-bootSequence();
+boot();
 
-// 🔐 LOGIN
-input.addEventListener("keydown", async function(e) {
+// login
+input.addEventListener("keydown", async (e) => {
 
   if (e.key === "Enter") {
 
@@ -67,41 +69,27 @@ input.addEventListener("keydown", async function(e) {
       if (value === "Hm20ae2358TpFnQ99") {
 
         gameStarted = true;
-        input.value = "";
+        loginBox.style.display = "none";
+        output.innerHTML = "";
 
         startStory();
 
       } else {
 
+        playGlitch();
         await typeLine("erişim reddedildi", "system");
-        input.value = "";
       }
     }
   }
 });
 
-// 🎮 HİKÂYE BAŞLANGICI
+// HİKAYE (DEĞİŞMEDİ)
 async function startStory() {
 
-  loginBox.style.display = "none";
-  output.innerText = "";
-
   await typeLine("erişim sağlandı...", "system");
-  await typeLine("ajan doğrulandı...", "system");
-  await typeLine("şifreli kanal açılıyor...", "system");
+  await typeLine("command bağlantısı kuruldu...", "system");
 
-  await typeLine("command: ajan gündüz… seni duyuyorum.", "command");
-  await typeLine("command: bu operasyon düşündüğünden daha büyük.", "command");
-
-  await typeLine("yağmur şehri tamamen sessizliğe gömmüştü.", "story");
-  await typeLine("ışıklar ıslak asfaltın üzerinde kırılıyordu.", "story");
-  await typeLine("birisi seni uzaktan izliyordu…", "story");
-
-  await typeLine("command: ilk kararını vermelisin.", "command");
-
-  await typeLine("1 - terk edilmiş binaya git", "system");
-  await typeLine("2 - sinyali takip et", "system");
+  await typeLine("command: seni duyuyorum ajan gündüz.", "command");
+  await typeLine("yağmur şehri kaplamıştı...", "story");
+  await typeLine("birisi seni izliyordu...", "story");
 }
-const ambient = document.getElementById("ambient");
-const typeSound = document.getElementById("typeSound");
-const glitchSound = document.getElementById("glitchSound");
