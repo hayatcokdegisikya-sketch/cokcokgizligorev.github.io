@@ -38,8 +38,8 @@ input {
   width: 100%;
 }
 .story {
-  color: #fff3b0; /* açık sarı */
-  line-height: 2;
+  color: #fff176;
+  text-shadow: 0 0 8px rgba(255, 241, 118, 0.6);
 }
 
 .system {
