@@ -1,9 +1,9 @@
 body {
   margin: 0;
   background: #000;
-  color: #7cff7c; /* daha az neon, yumuşak yeşil */
-  font-family: 'VT323', monospace;
-  font-size: 28px;
+  color: #7cff7c;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
 }
 
 #terminal {
@@ -32,7 +32,6 @@ input {
   border: none;
   outline: none;
   color: #7cff7c;
-  font-family: 'VT323', monospace;
-  font-size: 28px;
-  width: 200px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
 }
