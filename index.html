@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Sistem</title>
+
+<style>
+    body {
+        background-color: black;
+        color: #00ff00;
+        font-family: monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    input {
+        background: black;
+        border: 1px solid #00ff00;
+        color: #00ff00;
+        padding: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    button {
+        background: black;
+        border: 1px solid #00ff00;
+        color: #00ff00;
+        padding: 10px 20px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    #secretText {
+        margin-top: 30px;
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Hoş Geldin</h1>
+
+    <p>Başlamak için kodu gir.</p>
+
+    <input type="password" id="codeInput">
+
+    <br>
+
+    <button onclick="checkCode()">GİRİŞ</button>
+
+    <div id="secretText">
+        <h2>Erişim Onaylandı</h2>
+
+        <p>
+            Gerçek hikâye şimdi başlıyor...
+        </p>
+    </div>
+
+</div>
+
+<script>
+function checkCode() {
+
+    let code = document.getElementById("codeInput").value;
+
+    if(code === "1234") {
+
+        document.getElementById("secretText").style.display = "block";
+
+    } else {
+
+        alert("Hatalı kod.");
+
+    }
+}
+</script>
+
+</body>
+</html>
