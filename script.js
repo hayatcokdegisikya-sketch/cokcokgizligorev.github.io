@@ -22,7 +22,8 @@ async function bootSequence() {
     "şifreleme protokolü aktif...",
     "----------------------------",
     "gizli ajan terminali",
-    "kimlik doğrulaması gerekli"
+    "kimlik doğrulaması gerekli",
+    "lütfen şifreyi giriniz"
   ];
 
   for (let line of boot) {
