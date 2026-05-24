@@ -3,24 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>terminal</title>
+  <title>classified terminal</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div id="terminal">
+
     <div id="output"></div>
 
+    <!-- LOGIN -->
     <div class="login">
-      <p id="loginText">lütfen şifreyi gir</p>
+      <div id="bootText"></div>
+
+      <p id="loginText">kimlik doğrulaması gerekli</p>
 
       <div class="input-line">
         <span>&gt;</span>
         <input id="input" type="password" autocomplete="off" autofocus />
       </div>
     </div>
+
   </div>
 
   <script src="script.js"></script>
