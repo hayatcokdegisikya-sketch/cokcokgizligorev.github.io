@@ -1,101 +1,62 @@
 const input = document.getElementById("input");
 const output = document.getElementById("output");
+const loginText = document.getElementById("loginText");
+const loginBox = document.querySelector(".login");
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+let realPassword = "";
+
+// ekran yazma kuyruğu (çok önemli)
+async function typeLine(text, speed = 40) {
+  return new Promise(async (resolve) => {
+    let line = "";
+
+    for (let i = 0; i < text.length; i++) {
+      line += text[i];
+      output.innerText += text[i];
+      await new Promise(r => setTimeout(r, speed));
+    }
+
+    output.innerText += "\n";
+    resolve();
+  });
 }
 
-function print(text) {
-  output.innerText += text.toLowerCase() + "\n";
-  window.scrollTo(0, document.body.scrollHeight);
-}
-
-async function typeBoot() {
-  const lines = [
-    "booting system...",
-    "loading modules...",
-    "checking integrity...",
-    "access granted",
-    "welcome user"
-  ];
-
-  for (let line of lines) {
-    await sleep(500);
-    print(line);
-  }
-
-  print("\ntype 'help' for commands");
-}
-
-function glitchRandom() {
-  setInterval(() => {
-    document.body.classList.add("glitch");
-    setTimeout(() => {
-      document.body.classList.remove("glitch");
-    }, 150);
-  }, 8000);
-}
+// şifre mask
+input.addEventListener("input", function () {
+  realPassword = input.value;
+  input.value = "*".repeat(realPassword.length);
+});
 
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const cmd = input.value.trim().toLowerCase();
+    const entered = realPassword;
 
-    print("> " + cmd);
-    handleCommand(cmd);
-
-    input.value = "";
+    if (entered === "1234") {
+      loginSuccess();
+    } else {
+      loginText.innerText = "hatalı şifre";
+      realPassword = "";
+      input.value = "";
+    }
   }
 });
 
-function handleCommand(cmd) {
-  switch (cmd) {
+async function loginSuccess() {
+  // login ekranını kaldır
+  loginBox.remove();
+  output.innerText = "";
 
-    case "help":
-      print("commands:");
-      print("help");
-      print("clear");
-      print("whoami");
-      print("date");
-      print("hack");
-      break;
-
-    case "clear":
-      output.innerText = "";
-      break;
-
-    case "whoami":
-      print("user@terminal");
-      break;
-
-    case "date":
-      print(new Date().toString());
-      break;
-
-    case "hack":
-      fakeHack();
-      break;
-
-    default:
-      if (cmd !== "") {
-        print("command not found: " + cmd);
-      }
-  }
-}
-
-async function fakeHack() {
-  const steps = [
-    "bypassing firewall...",
-    "injecting payload...",
-    "accessing core system...",
-    "decrypting data...",
-    "system compromised"
+  const lines = [
+    "sistem doğrulanıyor...",
+    "erişim kontrol ediliyor...",
+    "şifre çözülüyor...",
+    "bağlantı kuruluyor...",
+    "hoş geldin ajan gündüz"
   ];
 
-  for (let s of steps) {
-    print(s);
-    await sleep(600);
+  // tüm satırlar tek tek yazılır
+  for (let line of lines) {
+    await typeLine(line, 50);
+    await new Promise(r => setTimeout(r, 300)); // satır arası bekleme
   }
 }
-
-typeBoot();
-glitchRandom();
