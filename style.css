@@ -1,61 +1,38 @@
 body {
   margin: 0;
   background: #000;
-  color: #00ff00;
-  font-family: 'Press Start 2P', monospace;
-  text-transform: lowercase;
-  overflow: hidden;
-}
-
-/* glitch effect */
-body.glitch {
-  animation: glitch 0.2s infinite;
-}
-
-@keyframes glitch {
-  0% { transform: translate(0,0); }
-  25% { transform: translate(2px,-2px); }
-  50% { transform: translate(-2px,2px); }
-  75% { transform: translate(2px,2px); }
-  100% { transform: translate(0,0); }
+  color: #7cff7c; /* daha az neon, yumuşak yeşil */
+  font-family: 'VT323', monospace;
+  font-size: 28px;
 }
 
 #terminal {
   padding: 20px;
   height: 100vh;
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 #output {
   white-space: pre-wrap;
-  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.login {
+  margin-top: 10px;
 }
 
 .input-line {
   display: flex;
-  align-items: center;
   gap: 10px;
-  margin-top: 10px;
+  align-items: center;
 }
 
 input {
   background: transparent;
   border: none;
   outline: none;
-  color: #00ff00;
-  font-family: 'Press Start 2P', monospace;
-  width: 100%;
-}
-
-/* blinking cursor */
-.cursor {
-  width: 10px;
-  height: 18px;
-  background: #00ff00;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
+  color: #7cff7c;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  width: 200px;
 }
