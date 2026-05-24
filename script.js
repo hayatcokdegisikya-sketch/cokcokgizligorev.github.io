@@ -70,7 +70,7 @@ async function loginSuccess() {
     "görev 2: iz temizleme protokolü",
     "durum: beklemede",
     "",
-    "hoş geldin ajan gündüz"
+    "hoş geldin ajan gündüz",
     "ilk görevine başlamak için lütfen A1 paketinin arkasındaki kodu gir"
   ];
 
