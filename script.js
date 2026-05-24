@@ -51,7 +51,7 @@ input.addEventListener("keydown", async function(e) {
 
     if (!gameStarted) {
 
-      if (value === "1234") {
+      if (value === "Hm20ae2358TpFnQ99") {
 
         gameStarted = true;
         input.value = "";
