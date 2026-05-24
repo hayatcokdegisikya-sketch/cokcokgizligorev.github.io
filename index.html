@@ -1,31 +1,26 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>classified terminal</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div id="terminal">
 
-    <div id="output"></div>
+<div id="output"></div>
 
-    <div class="login">
-      <div class="input-line">
-        <span>&gt;</span>
-        <input id="input" type="password" autocomplete="off" autofocus />
-      </div>
-    </div>
+<div class="login">
+  <input id="input" type="password" placeholder="kimlik doğrulama">
+</div>
 
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
 <audio id="ambient" src="ambient.mp3" loop></audio>
 <audio id="typeSound" src="type.mp3"></audio>
 <audio id="glitchSound" src="glitch.mp3"></audio>
+
+<script src="script.js"></script>
+
+</body>
+</html>
