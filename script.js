@@ -47,7 +47,7 @@ input.addEventListener("keydown", async function(e) {
 
   if (e.key === "Enter") {
 
-    const value = input.value.toLowerCase();
+    const value = input.value;
 
     if (!gameStarted) {
 
