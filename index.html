@@ -4,56 +4,82 @@
 <meta charset="UTF-8">
 <title>Sistem</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
 <style>
-    body {
-        background-color: black;
-        color: #00ff00;
-        font-family: monospace;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
+body {
+    margin: 0;
+    padding: 40px;
+    background: black;
+    color: #00ff00;
+    font-family: 'Share Tech Mono', monospace;
+    text-shadow: 0 0 5px #00ff00;
+    overflow: hidden;
+}
 
-    .container {
-        text-align: center;
-    }
+/* Matrix canvas */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
 
-    input {
-        background: black;
-        border: 1px solid #00ff00;
-        color: #00ff00;
-        padding: 10px;
-        font-size: 16px;
-        margin-top: 10px;
-    }
+/* içerik */
+.container {
+    position: relative;
+    z-index: 1;
+}
 
-    button {
-        background: black;
-        border: 1px solid #00ff00;
-        color: #00ff00;
-        padding: 10px 20px;
-        margin-top: 10px;
-        cursor: pointer;
-    }
+input {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    font-family: inherit;
+    outline: none;
+}
 
-    #secretText {
-        margin-top: 30px;
-        display: none;
-    }
+button {
+    background: black;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+#secretText {
+    margin-top: 30px;
+    display: none;
+}
+
+/* blinking cursor */
+.cursor {
+    display: inline-block;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <div class="container">
 
-    <h1>Hoş Geldin</h1>
+    <h1 id="title"></h1>
 
-    <p>Başlamak için kodu gir.</p>
+    <p id="line1"></p>
 
-    <input type="password" id="codeInput">
+    <input type="password" id="codeInput" placeholder="kod...">
 
     <br>
 
@@ -61,29 +87,80 @@
 
     <div id="secretText">
         <h2>Erişim Onaylandı</h2>
-
-        <p>
-            Gerçek hikâye şimdi başlıyor...
-        </p>
+        <p>Gerçek hikâye şimdi başlıyor...</p>
     </div>
 
 </div>
 
 <script>
-function checkCode() {
 
+/* ---------------- TYPEWRITER ---------------- */
+function typeWriter(text, elementId, speed = 50) {
+    let i = 0;
+    function typing() {
+        if (i < text.length) {
+            document.getElementById(elementId).innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
+}
+
+typeWriter("Hoş Geldin", "title", 80);
+setTimeout(() => {
+    typeWriter("Başlamak için kodu gir.", "line1", 40);
+}, 1000);
+
+/* ---------------- CHECK CODE ---------------- */
+function checkCode() {
     let code = document.getElementById("codeInput").value;
 
-    if(code === "1234") {
-
+    if (code === "1234") {
         document.getElementById("secretText").style.display = "block";
-
     } else {
-
         alert("Hatalı kod.");
-
     }
 }
+
+/* ---------------- MATRIX EFFECT ---------------- */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+let letters = "01";
+letters = letters.split("");
+
+let fontSize = 14;
+let columns = canvas.width / fontSize;
+
+let drops = [];
+
+for (let x = 0; x < columns; x++)
+    drops[x] = 1;
+
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < drops.length; i++) {
+        let text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+        drops[i]++;
+    }
+}
+
+setInterval(drawMatrix, 35);
+
 </script>
 
 </body>
