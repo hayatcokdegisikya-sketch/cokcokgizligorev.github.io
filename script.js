@@ -5,21 +5,35 @@ const loginBox = document.querySelector(".login");
 
 let realPassword = "";
 
-// ekran yazma kuyruğu (çok önemli)
-async function typeLine(text, speed = 40) {
-  return new Promise(async (resolve) => {
-    let line = "";
-
-    for (let i = 0; i < text.length; i++) {
-      line += text[i];
-      output.innerText += text[i];
-      await new Promise(r => setTimeout(r, speed));
-    }
-
-    output.innerText += "\n";
-    resolve();
-  });
+// yazı efekti
+async function typeLine(text, speed = 25) {
+  for (let i = 0; i < text.length; i++) {
+    output.innerText += text[i];
+    await new Promise(r => setTimeout(r, speed));
+  }
+  output.innerText += "\n";
 }
+
+// boot ekranı
+window.onload = async function () {
+  const boot = [
+    "sistem başlatılıyor...",
+    "çekirdek modülleri yükleniyor...",
+    "şifreleme protokolü aktif...",
+    "izleme sistemleri hazırlanıyor...",
+    "----------------------------",
+    "gizli ajan terminali",
+    "yetki seviyesi: delta-7",
+    "durum: sınıflandırılmış",
+    "----------------------------",
+    "kimlik doğrulaması gerekli"
+  ];
+
+  for (let line of boot) {
+    await typeLine(line, 20);
+    await new Promise(r => setTimeout(r, 200));
+  }
+};
 
 // şifre mask
 input.addEventListener("input", function () {
@@ -27,36 +41,44 @@ input.addEventListener("input", function () {
   input.value = "*".repeat(realPassword.length);
 });
 
+// login kontrol
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
-    const entered = realPassword;
-
-    if (entered === "1234") {
+    if (realPassword === "1234") {
       loginSuccess();
     } else {
-      loginText.innerText = "hatalı şifre";
+      loginText.innerText = "erişim reddedildi";
       realPassword = "";
       input.value = "";
     }
   }
 });
 
+// ajan paneli
 async function loginSuccess() {
-  // login ekranını kaldır
   loginBox.remove();
   output.innerText = "";
 
-  const lines = [
-    "sistem doğrulanıyor...",
-    "erişim kontrol ediliyor...",
-    "şifre çözülüyor...",
-    "bağlantı kuruluyor...",
-    "hoş geldin ajan gündüz"
+  const mission = [
+    "erişim sağlandı...",
+    "ajan doğrulandı",
+    "----------------------------",
+    "aktif görevler yükleniyor...",
+    "",
+    "görev 1: veri sunucusu sızması",
+    "hedef: bilinmiyor",
+    "öncelik: yüksek",
+    "",
+    "görev 2: iz temizleme protokolü",
+    "durum: beklemede",
+    "",
+    "----------------------------",
+    "komutlar: status / mission / clear",
+    "hoş geldin ajan"
   ];
 
-  // tüm satırlar tek tek yazılır
-  for (let line of lines) {
-    await typeLine(line, 50);
-    await new Promise(r => setTimeout(r, 300)); // satır arası bekleme
+  for (let line of mission) {
+    await typeLine(line, 20);
+    await new Promise(r => setTimeout(r, 150));
   }
 }
