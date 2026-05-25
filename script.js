@@ -62,9 +62,10 @@ input.addEventListener("keydown", async (e) => {
 
   if (e.key !== "Enter") return;
 
-  const value = input.value;
-
   if (!gameStarted) {
+
+    // 🔧 FIX: case-insensitive + trim
+    const value = input.value.trim().toLowerCase();
 
     if (value === "hm20ae2358tpfnq99") {
 
@@ -81,7 +82,7 @@ input.addEventListener("keydown", async (e) => {
   }
 });
 
-// hikaye başlangıcı (senin sahnen)
+// hikaye başlangıcı
 async function startStory() {
 
   glitchEffect();
@@ -89,7 +90,7 @@ async function startStory() {
   await typeLine("yağmur neredeyse 3 saattir durmuyordu", "story");
   await typeLine("şehrin ışıkları ıslak asfaltın üzerinde dans ediyordu", "story");
   await typeLine("eski apartmanların arasındaki dar sokak ise gerektiğinden fazla sessizdi", "story");
-  await typeLine("terminal ekranında tek bir mesaj belirdi", "story");
+  await typeLine("terminal ekranında tek bir mesaj belirdi", "system");
   await typeLine("“uyanık kal, seni izliyorlar.”", "command");
   await typeLine("ajan gündüz derin bir nefes aldı", "story");
   await typeLine("bu mesajın kimden geldiğini bilmiyordu", "story");
