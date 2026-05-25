@@ -4,21 +4,23 @@ const loginBox = document.querySelector(".login");
 
 let gameStarted = false;
 
-// yazı motoru
+// yazı motoru (system hızlı / story yavaş)
 async function typeLine(text, type = "story") {
 
   const div = document.createElement("div");
   div.classList.add(type);
   output.appendChild(div);
 
+  let delayBase = type === "system" ? 18 : 55; // 👈 fark burada
+
   for (let i = 0; i < text.length; i++) {
 
     div.innerText += text[i];
 
-    let delay = 22;
+    let delay = delayBase;
 
-    if (text[i] === "." || text[i] === "," || text[i] === "…") {
-      delay = 160;
+    if ([".", ",", "…"].includes(text[i])) {
+      delay = delayBase + 120;
     }
 
     await new Promise(r => setTimeout(r, delay));
@@ -28,13 +30,31 @@ async function typeLine(text, type = "story") {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
-// glitch efekti
-function glitchEffect() {
-  document.body.classList.add("glitch");
-  setTimeout(() => document.body.classList.remove("glitch"), 800);
+// ekran temizle
+function clearScreen() {
+  output.innerHTML = "";
 }
 
-// boot sequence
+// glitch
+function glitchEffect(time = 800) {
+  document.body.classList.add("glitch");
+  setTimeout(() => document.body.classList.remove("glitch"), time);
+}
+
+// matrix yağmur efekti (geçici)
+function matrixRainEffect() {
+
+  const rain = document.createElement("div");
+  rain.id = "matrixRain";
+
+  document.body.appendChild(rain);
+
+  setTimeout(() => {
+    rain.remove();
+  }, 3000);
+}
+
+// boot
 async function bootSequence() {
 
   const boot = [
@@ -57,14 +77,13 @@ async function bootSequence() {
 
 bootSequence();
 
-// giriş kontrolü
+// login
 input.addEventListener("keydown", async (e) => {
 
   if (e.key !== "Enter") return;
 
   if (!gameStarted) {
 
-    // 🔧 FIX: case-insensitive + trim
     const value = input.value.trim().toLowerCase();
 
     if (value === "hm20ae2358tpfnq99") {
@@ -73,7 +92,16 @@ input.addEventListener("keydown", async (e) => {
       input.value = "";
       loginBox.style.display = "none";
 
-      startStory();
+      // ekran sil
+      clearScreen();
+
+      // system mesajları (hızlı)
+      await typeLine("erişim sağlandı...", "system");
+      await typeLine("ajan doğrulandı...", "system");
+      await typeLine("şifreli kanal açılıyor...", "system");
+
+      // hikaye başlat
+      await startStory();
 
     } else {
       await typeLine("erişim reddedildi", "system");
@@ -82,10 +110,15 @@ input.addEventListener("keydown", async (e) => {
   }
 });
 
-// hikaye başlangıcı
+// hikaye
 async function startStory() {
 
-  glitchEffect();
+  // bölüm öncesi ekran temizle
+  clearScreen();
+
+  // büyük glitch + matrix
+  glitchEffect(1500);
+  matrixRainEffect();
 
   await typeLine("yağmur neredeyse 3 saattir durmuyordu", "story");
   await typeLine("şehrin ışıkları ıslak asfaltın üzerinde dans ediyordu", "story");
@@ -96,9 +129,11 @@ async function startStory() {
   await typeLine("bu mesajın kimden geldiğini bilmiyordu", "story");
   await typeLine("ama birisi sisteme giriş yaptığını fark etmişti", "story");
 
-  glitchEffect();
+  // tekrar temizle (bölüm geçişi)
+  clearScreen();
 
-  showChapter("bölüm 1: yitik dünya");
+  // büyük bölüm yazısı
+  showChapter("BÖLÜM 1: YİTİK DÜNYA");
 }
 
 // bölüm yazısı
