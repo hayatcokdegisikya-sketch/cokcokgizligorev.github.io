@@ -18,6 +18,7 @@ body {
   line-height: 1.8;
 }
 
+/* login */
 .login {
   display: none;
 }
@@ -38,13 +39,16 @@ input {
   width: 100%;
 }
 
-/* renkler */
+/* =======================
+   RENK SİSTEMİ
+======================= */
+
 .system {
   color: #7cff7c;
 }
 
 .command {
-  color: #ff5c5c;
+  color: #ff4d4d;
 }
 
 .story {
@@ -52,50 +56,70 @@ input {
   text-shadow: 0 0 8px rgba(255, 241, 118, 0.5);
 }
 
-/* glitch */
+/* =======================
+   GLITCH EFEKT
+======================= */
+
 .glitch {
-  animation: glitch 0.12s infinite;
+  animation: glitch 0.1s infinite;
+  filter: contrast(1.2) saturate(1.5);
 }
 
 @keyframes glitch {
   0% { transform: translate(0); }
-  25% { transform: translate(-1px, 1px); }
-  50% { transform: translate(1px, -1px); }
-  75% { transform: translate(-1px, -1px); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -2px); }
   100% { transform: translate(0); }
 }
 
-/* bölüm yazısı */
+/* =======================
+   BÖLÜM YAZISI
+======================= */
+
 .chapter {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff176;
-  text-shadow: 0 0 12px rgba(255,255,150,0.7);
-  font-size: 14px;
+  text-shadow: 0 0 12px rgba(255,255,150,0.8);
+  font-size: 16px;
   opacity: 0;
-  animation: chapter 4s forwards;
+  animation: chapterFade 4s forwards;
 }
 
-@keyframes chapter {
+@keyframes chapterFade {
   0% { opacity: 0; transform: translate(-50%, -45%); }
   30% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -55%); }
 }
+
+/* =======================
+   MATRIX RAIN (FIXED)
+   ❌ image yerine gerçek efekt
+======================= */
+
 #matrixRain {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("https://i.imgur.com/6Q3ZQZC.png");
-  opacity: 0.35;
   pointer-events: none;
-  animation: rainMove 0.2s infinite linear;
+
+  /* gerçek matrix hissi */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 0, 0.08) 0%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+
+  animation: rainMove 0.15s linear infinite;
+  opacity: 0.3;
 }
 
 @keyframes rainMove {
-  0% { transform: translateY(0); }
+  0% { transform: translateY(-10px); }
   100% { transform: translateY(10px); }
 }
