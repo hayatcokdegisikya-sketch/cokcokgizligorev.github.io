@@ -3,21 +3,20 @@ const output = document.getElementById("output");
 const loginBox = document.querySelector(".login");
 
 let gameStarted = false;
-let allowGlitch = false; // ❗ kontrol sistemi
+let allowGlitch = false;
 
-// yazı motoru (ORTA-YAVAŞ DENGE)
+// yazı motoru (biraz hızlandırıldı)
 async function typeLine(text, type = "story") {
 
   const div = document.createElement("div");
   div.classList.add(type);
   output.appendChild(div);
 
-  // 🧠 hız dengesi
-  let delayBase = 35; // ORTA SEVİYE (çok yavaş değil, çok hızlı değil)
+  let delayBase = 30;
 
-  if (type === "system") delayBase = 18;
-  if (type === "command") delayBase = 25;
-  if (type === "story") delayBase = 45;
+  if (type === "system") delayBase = 14;
+  if (type === "command") delayBase = 22;
+  if (type === "story") delayBase = 38; // 👈 biraz hızlandı
 
   for (let i = 0; i < text.length; i++) {
 
@@ -26,7 +25,7 @@ async function typeLine(text, type = "story") {
     let delay = delayBase;
 
     if ([".", ",", "…", ":"].includes(text[i])) {
-      delay += 120;
+      delay += 90;
     }
 
     await new Promise(r => setTimeout(r, delay));
@@ -36,10 +35,10 @@ async function typeLine(text, type = "story") {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
-// glitch (SADECE İZİNLİYSE)
+// glitch
 function glitchEffect(time = 700) {
 
-  if (!allowGlitch) return; // ❗ story sırasında engel
+  if (!allowGlitch) return;
 
   document.body.classList.add("glitch");
 
@@ -48,7 +47,7 @@ function glitchEffect(time = 700) {
   }, time);
 }
 
-// ekran temizle
+// ekran temizleme KALDIRILDI (artık yok)
 function clearScreen() {
   output.innerHTML = "";
 }
@@ -91,13 +90,13 @@ input.addEventListener("keydown", async (e) => {
       input.value = "";
       loginBox.style.display = "none";
 
-      clearScreen();
-
+      // ❗ SADECE SYSTEM MESAJLARI
       await typeLine("erişim sağlandı...", "system");
       await typeLine("ajan doğrulandı...", "system");
       await typeLine("şifreli kanal açılıyor...", "system");
 
-      await startStory();
+      // 👉 HİKAYE HEMEN BAŞLAR (reset YOK)
+      startStory();
 
     } else {
       await typeLine("erişim reddedildi", "system");
@@ -109,11 +108,8 @@ input.addEventListener("keydown", async (e) => {
 // hikaye
 async function startStory() {
 
-  allowGlitch = false; // ❌ story boyunca glitch YOK
+  allowGlitch = false;
 
-  clearScreen();
-
-  // 🌧 hikaye (orta-yavaş)
   await typeLine("yağmur neredeyse 3 saattir durmuyordu", "story");
   await typeLine("şehrin ışıkları ıslak asfaltın üzerinde dans ediyordu", "story");
   await typeLine("eski apartmanların arasındaki dar sokak ise gerektiğinden fazla sessizdi", "story");
@@ -123,23 +119,17 @@ async function startStory() {
   await typeLine("bu mesajın kimden geldiğini bilmiyordu", "story");
   await typeLine("ama birisi sisteme giriş yaptığını fark etmişti", "story");
 
-  // ⏳ dramatik bekleme
-  await new Promise(r => setTimeout(r, 3500));
+  // bekleme
+  await new Promise(r => setTimeout(r, 2500));
 
-  // ❗ artık glitch serbest
   allowGlitch = true;
 
-  // ekran reset
-  clearScreen();
+  glitchEffect(1000);
 
-  // ⚡ küçük glitch anı
-  glitchEffect(1200);
-
-  // 🎬 bölüm yazısı (yavaş giriş)
   await showChapter("BÖLÜM 1: YİTİK DÜNYA");
 }
 
-// bölüm yazısı (yavaş yazım efekti)
+// chapter
 async function showChapter(text) {
 
   const div = document.createElement("div");
@@ -148,10 +138,10 @@ async function showChapter(text) {
 
   for (let i = 0; i < text.length; i++) {
     div.innerText += text[i];
-    await new Promise(r => setTimeout(r, 90)); // yavaş dramatik
+    await new Promise(r => setTimeout(r, 80));
   }
 
-  await new Promise(r => setTimeout(r, 2000));
+  await new Promise(r => setTimeout(r, 1800));
 
   div.remove();
 }
