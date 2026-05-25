@@ -3,15 +3,21 @@ const output = document.getElementById("output");
 const loginBox = document.querySelector(".login");
 
 let gameStarted = false;
+let allowGlitch = false; // ❗ kontrol sistemi
 
-// yazı motoru (system hızlı / story yavaş)
+// yazı motoru (ORTA-YAVAŞ DENGE)
 async function typeLine(text, type = "story") {
 
   const div = document.createElement("div");
   div.classList.add(type);
   output.appendChild(div);
 
-  let delayBase = type === "system" ? 18 : 55; // 👈 fark burada
+  // 🧠 hız dengesi
+  let delayBase = 35; // ORTA SEVİYE (çok yavaş değil, çok hızlı değil)
+
+  if (type === "system") delayBase = 18;
+  if (type === "command") delayBase = 25;
+  if (type === "story") delayBase = 45;
 
   for (let i = 0; i < text.length; i++) {
 
@@ -19,8 +25,8 @@ async function typeLine(text, type = "story") {
 
     let delay = delayBase;
 
-    if ([".", ",", "…"].includes(text[i])) {
-      delay = delayBase + 120;
+    if ([".", ",", "…", ":"].includes(text[i])) {
+      delay += 120;
     }
 
     await new Promise(r => setTimeout(r, delay));
@@ -30,28 +36,21 @@ async function typeLine(text, type = "story") {
   window.scrollTo(0, document.body.scrollHeight);
 }
 
+// glitch (SADECE İZİNLİYSE)
+function glitchEffect(time = 700) {
+
+  if (!allowGlitch) return; // ❗ story sırasında engel
+
+  document.body.classList.add("glitch");
+
+  setTimeout(() => {
+    document.body.classList.remove("glitch");
+  }, time);
+}
+
 // ekran temizle
 function clearScreen() {
   output.innerHTML = "";
-}
-
-// glitch
-function glitchEffect(time = 800) {
-  document.body.classList.add("glitch");
-  setTimeout(() => document.body.classList.remove("glitch"), time);
-}
-
-// matrix yağmur efekti (geçici)
-function matrixRainEffect() {
-
-  const rain = document.createElement("div");
-  rain.id = "matrixRain";
-
-  document.body.appendChild(rain);
-
-  setTimeout(() => {
-    rain.remove();
-  }, 3000);
 }
 
 // boot
@@ -92,15 +91,12 @@ input.addEventListener("keydown", async (e) => {
       input.value = "";
       loginBox.style.display = "none";
 
-      // ekran sil
       clearScreen();
 
-      // system mesajları (hızlı)
       await typeLine("erişim sağlandı...", "system");
       await typeLine("ajan doğrulandı...", "system");
       await typeLine("şifreli kanal açılıyor...", "system");
 
-      // hikaye başlat
       await startStory();
 
     } else {
@@ -113,37 +109,49 @@ input.addEventListener("keydown", async (e) => {
 // hikaye
 async function startStory() {
 
-  // bölüm öncesi ekran temizle
+  allowGlitch = false; // ❌ story boyunca glitch YOK
+
   clearScreen();
 
-  // büyük glitch + matrix
-  glitchEffect(1500);
-  matrixRainEffect();
-
+  // 🌧 hikaye (orta-yavaş)
   await typeLine("yağmur neredeyse 3 saattir durmuyordu", "story");
   await typeLine("şehrin ışıkları ıslak asfaltın üzerinde dans ediyordu", "story");
   await typeLine("eski apartmanların arasındaki dar sokak ise gerektiğinden fazla sessizdi", "story");
-  await typeLine("terminal ekranında tek bir mesaj belirdi", "story");
+  await typeLine("terminal ekranında tek bir mesaj belirdi", "system");
   await typeLine("“uyanık kal, seni izliyorlar.”", "command");
   await typeLine("ajan gündüz derin bir nefes aldı", "story");
   await typeLine("bu mesajın kimden geldiğini bilmiyordu", "story");
   await typeLine("ama birisi sisteme giriş yaptığını fark etmişti", "story");
 
-  // tekrar temizle (bölüm geçişi)
+  // ⏳ dramatik bekleme
+  await new Promise(r => setTimeout(r, 3500));
+
+  // ❗ artık glitch serbest
+  allowGlitch = true;
+
+  // ekran reset
   clearScreen();
 
-  // büyük bölüm yazısı
-  showChapter("BÖLÜM 1: YİTİK DÜNYA");
+  // ⚡ küçük glitch anı
+  glitchEffect(1200);
+
+  // 🎬 bölüm yazısı (yavaş giriş)
+  await showChapter("BÖLÜM 1: YİTİK DÜNYA");
 }
 
-// bölüm yazısı
-function showChapter(text) {
+// bölüm yazısı (yavaş yazım efekti)
+async function showChapter(text) {
 
   const div = document.createElement("div");
   div.classList.add("chapter");
-  div.innerText = text;
+  output.appendChild(div);
 
-  document.body.appendChild(div);
+  for (let i = 0; i < text.length; i++) {
+    div.innerText += text[i];
+    await new Promise(r => setTimeout(r, 90)); // yavaş dramatik
+  }
 
-  setTimeout(() => div.remove(), 4000);
+  await new Promise(r => setTimeout(r, 2000));
+
+  div.remove();
 }
