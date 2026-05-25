@@ -83,3 +83,19 @@ input {
   30% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -55%); }
 }
+#matrixRain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://i.imgur.com/6Q3ZQZC.png");
+  opacity: 0.35;
+  pointer-events: none;
+  animation: rainMove 0.2s infinite linear;
+}
+
+@keyframes rainMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
