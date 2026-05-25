@@ -4,6 +4,7 @@ body {
   color: #7cff7c;
   font-family: 'Press Start 2P', monospace;
   font-size: 12px;
+  overflow: hidden;
 }
 
 #terminal {
@@ -15,7 +16,6 @@ body {
 #output {
   white-space: pre-wrap;
   line-height: 1.8;
-  margin-bottom: 20px;
 }
 
 .login {
@@ -37,17 +37,49 @@ input {
   font-size: 12px;
   width: 100%;
 }
-.story {
-  color: #fff176;
-  text-shadow: 0 0 8px rgba(255, 241, 118, 0.6);
-}
 
+/* renkler */
 .system {
-  color: #7cff7c; /* terminal yeşili */
-  line-height: 2;
+  color: #7cff7c;
 }
 
 .command {
-  color: #ff5c5c; /* kırmızı */
-  line-height: 2;
+  color: #ff5c5c;
+}
+
+.story {
+  color: #fff176;
+  text-shadow: 0 0 8px rgba(255, 241, 118, 0.5);
+}
+
+/* glitch */
+.glitch {
+  animation: glitch 0.12s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  25% { transform: translate(-1px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+  100% { transform: translate(0); }
+}
+
+/* bölüm yazısı */
+.chapter {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff176;
+  text-shadow: 0 0 12px rgba(255,255,150,0.7);
+  font-size: 14px;
+  opacity: 0;
+  animation: chapter 4s forwards;
+}
+
+@keyframes chapter {
+  0% { opacity: 0; transform: translate(-50%, -45%); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -55%); }
 }
