@@ -4,8 +4,8 @@ const loginBox = document.querySelector(".login");
 
 let gameStarted = false;
 
-// 🎬 EVRENİK YAZI MOTORU
-async function typeLine(text, type = "system") {
+// yazı motoru
+async function typeLine(text, type = "story") {
 
   const div = document.createElement("div");
   div.classList.add(type);
@@ -17,22 +17,24 @@ async function typeLine(text, type = "system") {
 
     let delay = 22;
 
-    // dramatik duraksama
     if (text[i] === "." || text[i] === "," || text[i] === "…") {
-      delay = 200;
+      delay = 160;
     }
 
     await new Promise(r => setTimeout(r, delay));
   }
 
   div.innerText += "\n";
-
   window.scrollTo(0, document.body.scrollHeight);
-
-  await new Promise(r => setTimeout(r, 500));
 }
 
-// 🚀 BOOT SEQUENCE (YEŞİL)
+// glitch efekti
+function glitchEffect() {
+  document.body.classList.add("glitch");
+  setTimeout(() => document.body.classList.remove("glitch"), 800);
+}
+
+// boot sequence
 async function bootSequence() {
 
   const boot = [
@@ -55,50 +57,57 @@ async function bootSequence() {
 
 bootSequence();
 
-// 🔐 LOGIN
-input.addEventListener("keydown", async function(e) {
+// giriş kontrolü
+input.addEventListener("keydown", async (e) => {
 
-  if (e.key === "Enter") {
+  if (e.key !== "Enter") return;
 
-    const value = input.value;
+  const value = input.value;
 
-    if (!gameStarted) {
+  if (!gameStarted) {
 
-      if (value === "Hm20ae2358TpFnQ99") {
+    if (value === "hm20ae2358tpfnq99") {
 
-        gameStarted = true;
-        input.value = "";
+      gameStarted = true;
+      input.value = "";
+      loginBox.style.display = "none";
 
-        startStory();
+      startStory();
 
-      } else {
-
-        await typeLine("erişim reddedildi", "system");
-        input.value = "";
-      }
+    } else {
+      await typeLine("erişim reddedildi", "system");
+      input.value = "";
     }
   }
 });
 
-// 🎮 HİKÂYE BAŞLANGICI
+// hikaye başlangıcı (senin sahnen)
 async function startStory() {
 
-  loginBox.style.display = "none";
-  output.innerText = "";
+  glitchEffect();
 
-  await typeLine("erişim sağlandı...", "system");
-  await typeLine("ajan doğrulandı...", "system");
-  await typeLine("şifreli kanal açılıyor...", "system");
+  await typeLine("yağmur neredeyse 3 saattir durmuyordu", "story");
+  await typeLine("şehrin ışıkları ıslak asfaltın üzerinde dans ediyordu", "story");
+  await typeLine("eski apartmanların arasındaki dar sokak ise gerektiğinden fazla sessizdi", "story");
+  await typeLine("terminal ekranında tek bir mesaj belirdi", "story");
+  await typeLine("“uyanık kal, seni izliyorlar.”", "command");
+  await typeLine("ajan gündüz derin bir nefes aldı", "story");
+  await typeLine("bu mesajın kimden geldiğini bilmiyordu", "story");
+  await typeLine("ama birisi sisteme giriş yaptığını fark etmişti", "story");
 
-  await typeLine("command: ajan gündüz… seni duyuyorum.", "command");
-  await typeLine("command: bu operasyon düşündüğünden daha büyük.", "command");
+  glitchEffect();
 
-  await typeLine("yağmur şehri tamamen sessizliğe gömmüştü.", "story");
-  await typeLine("ışıklar ıslak asfaltın üzerinde kırılıyordu.", "story");
-  await typeLine("birisi seni uzaktan izliyordu…", "story");
+  showChapter("bölüm 1: yitik dünya");
+}
 
-  await typeLine("command: ilk kararını vermelisin.", "command");
+// bölüm yazısı
+function showChapter(text) {
 
-  await typeLine("1 - terk edilmiş binaya git", "system");
-  await typeLine("2 - sinyali takip et", "system");
+  const div = document.createElement("div");
+  div.classList.add("chapter");
+  div.innerText = text;
+
+  document.body.appendChild(div);
+
+  setTimeout(() => div.remove(), 4000);
 }
