@@ -145,7 +145,7 @@ async function startStory() {
 
   await typeLine("eski apartmanların arasındaki dar sokak ise gerektiğinden fazla sessizdi", "story");
 
-  await typeLine("terminal ekranında tek bir mesaj belirdi", "story");
+  await typeLine("terminal ekranında tek bir mesaj belirdi", "command");
 
   await typeLine("“uyanık kal, seni izliyorlar.”", "command");
 
